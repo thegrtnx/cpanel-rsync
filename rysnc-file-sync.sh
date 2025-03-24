@@ -67,7 +67,7 @@ sync_files() {
     while [ $attempt -le $MAX_RETRIES ]; do
         echo "Attempt $attempt: Pulling files from source..." | tee -a "$LOG_FILE"
 
-        sshpass -p "$SRC_PASSWORD" rsync -avzP --protocol=31 --partial --append-verify --ignore-existing \
+        sshpass -p "$SRC_PASSWORD" rsync -avzP --partial --append-verify --ignore-existing \
             -e "ssh -p $SRC_PORT" \
             "${EXCLUDE[@]}" \
             --ignore-existing \
@@ -78,7 +78,7 @@ sync_files() {
             echo "✅ Files successfully pulled from source!" | tee -a "$LOG_FILE"
 
             echo "🚀 Attempt $attempt: Pushing files to destination..." | tee -a "$LOG_FILE"
-            sshpass -p "$DEST_PASSWORD" rsync -avzP --protocol=31 --partial --append-verify --ignore-existing \
+            sshpass -p "$DEST_PASSWORD" rsync -avzP --partial --append-verify --ignore-existing \
                 -e "ssh -p $DEST_PORT" \
                 "${EXCLUDE[@]}" \
                 --ignore-existing \
